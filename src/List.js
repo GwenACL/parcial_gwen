@@ -7,19 +7,24 @@ const { useEffect, useState } = require("react");
 function List() {
  const [elements, setElements] = useState([]);
  useEffect(() => {
-   const URL =
-     "https://github.com/GwenACL/WebUniandes/blob/main/datos.json";
-   fetch(URL)
-     .then((data) => data.json())
-     .then((data) => {
-       setElements(data);
-     });
- }, []);
+  const URL =
+    "https://raw.githubusercontent.com/GwenACL/WebUniandes/main/datos.json";
+  fetch(URL)
+    .then((data) => data.json())
+    .then((data) => {
+      const elementsWithIds = data.map((element, index) => ({
+        ...element,
+        id: index + 1
+      }));
+      
+      setElements(elementsWithIds);
+    });
+}, []);
+
+ 
 
  return (
    <div className="container">
-     <h2 className="mt-2">Listado de elementos</h2>
-     <hr></hr>
      <Row>
        {elements.map((element) => (
          <Col key={element.id}>

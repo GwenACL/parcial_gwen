@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Login from "./Login";
 import List from "./List";
+import Login from "./Login";
+import Detail from "./Detail";
 
 function App() {
  return (
@@ -11,6 +12,7 @@ function App() {
          <Route path="/" element={<Login />} />
          <Route path="/login" element={<Login />} />
          <Route path="/parts" element = {<List/>} />
+         <Route path="/parts/:id" element = {< Detail/>} />
        </Routes>
      </BrowserRouter>
    </div>

@@ -16,9 +16,9 @@ function Login() {
   const [className, setClassName] = useState(`form-control ${!validationStates.emailState ? 'is-invalid' : ''}`)
   const [otherClassName, setOtherClassName] = useState(`mb-6 ${!validationStates.emailState ? 'has-danger' : ''}`)
   
-  const navigateToList = () => {
+   const navigateToList = () => {
     navigate("/parts");
-  };
+   };
   
   const handleChange = ((e) => {
 
