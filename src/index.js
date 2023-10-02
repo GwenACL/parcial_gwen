@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { IntlProvider } from 'react-intl';
+import localEsMessages from "./locals/es";
+import localEnMessages from "./locals/en";
+import localFrMessages from "./locals/fr";
+import Intl from "./Intl"
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Intl/>
   </React.StrictMode>
 );
 

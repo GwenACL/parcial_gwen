@@ -1,0 +1,17 @@
+{
+    "L-title": "Access",
+    "L-title2": "Use your UniAlpes account",
+    "L-email-placeholder": "Email",
+    "L-password-placeholder": "Enter your password.",
+    "L-button": "Next",
+    "L-forget": "Can't remember the email adress?",
+    "L-create": "Create account",
+    "L-show-password" : "Show password",
+
+    "D-carMaker": "Car Maker",
+    "D-carModel": "Car Model",
+    "D-Year": "Car Year",
+    "D-available": "Available online",
+    "D-price":"Price",
+    "D-description":"Description:"
+}

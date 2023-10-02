@@ -1,0 +1,17 @@
+{
+    "L-title": "Acedar",
+    "L-title2": "Usa tu Cuenta de UniAlpes",
+    "L-email-placeholder": "Correo electrónico",
+    "L-password-placeholder": "Ingresa tu contraseña.",
+    "L-button": "Siguiente",
+    "L-forget": "¿Olvidaste el correo electronico?",
+    "L-create": "Crear cuenta",
+    "L-show-password" : "Mostrar contraseña",
+
+    "D-carMaker": "Fabricante de carro",
+    "D-carModel": "Modelo de carro",
+    "D-Year": "Año de fabricación",
+    "D-available": "Disponible online",
+    "D-price":"Precio",
+    "D-description":"Descripción:"
+}

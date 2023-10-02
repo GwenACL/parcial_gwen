@@ -1,45 +1,41 @@
-import logo from './logo.svg';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {Routes, Route, useNavigate} from 'react-router-dom';
-function Login() {
+import {useNavigate} from 'react-router-dom';
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from 'react-router-dom';
+import LanguageSelector from './LanguageSelector';
+function Login(props) {
 
+  const intl = useIntl();
+  const mail_placeholder = intl.formatMessage({ id: "L-email-placeholder" });
+  const password_placeholder = intl.formatMessage({id : "L-password-placeholder"})
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState("")
+  const [formValues, setFormValues] = useState({ email: "", password: ""})
   const [validationStates, setValidationState] = useState({ emailState: false, passwordState: false })
-  const [titleValue, setTitleValue] = useState("Acceder")
+  const [titleValue, setTitleValue] = useState("")
   const [showTitle2, setShowTitle2] = useState(true)
   const [phase, setPhase] = useState(1)
-  const [type, setType] = useState("email")
-  const [placeholder, setPlaceholder] = useState("Correo electrónico")
-  const [className, setClassName] = useState(`form-control ${!validationStates.emailState ? 'is-invalid' : ''}`)
-  const [otherClassName, setOtherClassName] = useState(`mb-6 ${!validationStates.emailState ? 'has-danger' : ''}`)
-  
+
    const navigateToList = () => {
     navigate("/parts");
    };
   
-  const handleChange = ((e) => {
+  const handleEmailChange = ((e) => {
+    setFormValues({ ...formValues, email: e.target.value })
+    validateEmail(e)
+  });
 
-    if (phase === 1){
-      setFormValues(e.target.value);
-      validateEmail(e);
-    }
-
-    if (phase === 2){
-      setFormValues(e.target.value);
-      validatePassword(e);
-    }
+  const handlePasswordChange = ((e) => {
+    setFormValues({ ...formValues, password: e.target.value })
+    validatePassword(e)
   });
 
   const validatePassword = (e) => {
     const password = e.target.value;
-    const hasLetters = /[a-zA-Z]/.test(password);
-    const hasNumbers = /\d/.test(password);
-    const isLongEnough = password.length >= 9;
+    const isLongEnough = password.length >= 6;
 
-    if (hasLetters && hasNumbers && isLongEnough) {
+    if (isLongEnough) {
       setValidationState({ ...validationStates, passwordState: true });
     }
 
@@ -62,20 +58,20 @@ function Login() {
   };
 
 
-  const clickSubmit = (() => {
+  const clickSubmit1 = (() => {
 
-    if (phase === 1 && validationStates.emailState){
+    if (validationStates.emailState){
       setTitleValue(formValues.email);
       setShowTitle2(false);
       setPhase(2);
-      setFormValues("");
-      setType("password");
-      setPlaceholder("Ingresa tu contraseña.");
-      setClassName(`form-control ${!validationStates.passwordState ? 'is-invalid' : ''}`)
-      setOtherClassName(`mb-6 ${!validationStates.passwordState ? 'has-danger' : ''}`)
     }
+  })
 
-    if (phase === 2 && validationStates.passwordState){
+  const clickSubmit2 = (() => {
+
+    if (validationStates.passwordState){
+      const random = Math.random();
+      props.setRole((random < 0.5) ? true : false)
       navigateToList();
     }
 
@@ -83,22 +79,48 @@ function Login() {
 
   return (
     <div>
-      <h1>{titleValue}</h1>
-      {showTitle2 && <h2>Usa tu Cuenta de UniAlpes</h2>}
-      <Form>
-        <Form.Group className={otherClassName} controlId="formBasicEmail">
+      {phase === 1 && <h1><FormattedMessage id = "L-title"></FormattedMessage></h1>}
+      {phase === 1 && <h1>{titleValue}</h1>}
+      {showTitle2 && <h2><FormattedMessage id = "L-title2"></FormattedMessage></h2>}
+      {phase === 1 && <Form>
+        <LanguageSelector userLocale = {props.userLocale} setUserLocale = {props.setUserLocale}/>
+        <Form.Group className={`mb-6 ${!validationStates.emailState ? 'has-danger' : ''}`} controlId="formBasicEmail">
           <Form.Control
-            type={type}
-            placeholder={placeholder}
-            onChange={handleChange}
-            value={formValues}
-            className={className}
+            type="email"
+            placeholder={mail_placeholder}
+            onChange={handleEmailChange}
+            value={formValues.email}
+            className={`form-control ${!validationStates.emailState ? 'is-invalid' : ''}`}
           />
         </Form.Group>
-        <Button variant="primary" onClick={clickSubmit}>
-          Siguiente
+        <Link><FormattedMessage id = "L-forget"></FormattedMessage></Link>
+        <div className="d-flex align-items-center">
+        <Link><FormattedMessage id = "L-create"/></Link>
+        <Button variant="primary" onClick={clickSubmit1}>
+          <FormattedMessage id = "L-button"></FormattedMessage>
         </Button>
-      </Form>
+        </div>
+      </Form>}
+      {phase === 2 && <Form>
+        <Form.Group className={`mb-6 ${!validationStates.passwordState ? 'has-danger' : ''}`} controlId="formBasicEmail">
+          <Form.Control
+            type="password"
+            placeholder={password_placeholder}
+            onChange={handlePasswordChange}
+            value={formValues.password}
+            className={`form-control ${!validationStates.passwordState ? 'is-invalid' : ''}`}
+          />
+        </Form.Group>
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+        <label class="form-check-label" for="flexCheckDefault">
+          <FormattedMessage id = "L-show-password"/>
+        </label>
+      </div>
+        <Button variant="primary" onClick={clickSubmit2}>
+          <FormattedMessage id = "L-button"></FormattedMessage>
+        </Button>
+      </Form>}
     </div>
   );
 }
